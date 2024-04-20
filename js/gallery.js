@@ -68,22 +68,28 @@ const gallery = document.querySelector('.gallery')
 
 
 for(prop of images){
-    const {preview, original, description} = prop;
-    const li = document.createElement('li');
-    li.classList.add('gallery-item');
-    const a = document.createElement('a');
-    a.classList.add('gallery-link');
-    a.href = original;
-    const img = document.createElement('img');
-    img.classList.add('gallery-image');
-    img.src = preview;
-    img.alt = description;
-    img.dataset.source = original;
-    a.append(img)
-    li.append(a)
-    gallery.append(li)
+  const {preview, original, description} = prop;
+  const li = document.createElement('li');
+  li.classList.add('gallery-item');
+  const a = document.createElement('a');
+  a.classList.add('gallery-link');
+  a.href = original;
+  const img = document.createElement('img');
+  img.classList.add('gallery-image');
+  img.src = preview;
+  img.alt = description;
+  img.dataset.source = original;
+  a.append(img)
+  li.append(a)
+  gallery.append(li)
 }
 
-gallery.addEventListener('click', () => {
-    console.log(event.target.dataset.source);
-})
+const modal = () => {
+  const description = event.target.alt
+  const instance = basicLightbox.create(`
+	  <img class="modal-img" src="${event.target.dataset.source}" alt="${description}">
+`)
+  instance.show()
+}
+
+gallery.addEventListener('click', modal)
