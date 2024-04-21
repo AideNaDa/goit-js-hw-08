@@ -67,7 +67,7 @@ const images = [
 const gallery = document.querySelector('.gallery')
 
 
-for(prop of images){
+for(let prop of images){
   const {preview, original, description} = prop;
   const li = document.createElement('li');
   li.classList.add('gallery-item');
