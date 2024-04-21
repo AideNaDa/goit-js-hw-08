@@ -66,30 +66,33 @@ const images = [
 
 const gallery = document.querySelector('.gallery')
 
+const markup = images.reduce((html, image) => {
+  return (html += 
+    `<li class="gallery-item">
+      <a class="gallery-link" href="${image.original}">
+        <img
+          class="gallery-image"
+          src="${image.preview}"
+          data-source="${image.original}"
+          alt="${image.description}"
+        />
+      </a>
+    </li>`);
+}, '')
 
-for(let prop of images){
-  const {preview, original, description} = prop;
-  const li = document.createElement('li');
-  li.classList.add('gallery-item');
-  const a = document.createElement('a');
-  a.classList.add('gallery-link');
-  a.href = original;
-  const img = document.createElement('img');
-  img.classList.add('gallery-image');
-  img.src = preview;
-  img.alt = description;
-  img.dataset.source = original;
-  a.append(img)
-  li.append(a)
-  gallery.append(li)
-}
+gallery.insertAdjacentHTML('beforeEnd', markup)
 
-const modal = () => {
-  const description = event.target.alt
+const modal = (event) => {
+  event.preventDefault();
+
+  if (!event.target.classList.contains('gallery-image')) return;
+
+  const description = event.target.alt;
+  const original = event.target.dataset.source
   const instance = basicLightbox.create(`
-	  <img class="modal-img" src="${event.target.dataset.source}" alt="${description}">
-`)
-  instance.show()
-}
+    <img class="modal-img" src="${original}" alt="${description}">
+  `);
+  instance.show();
+};
 
 gallery.addEventListener('click', modal)
