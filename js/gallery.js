@@ -95,4 +95,4 @@ const modal = (event) => {
   instance.show();
 };
 
-gallery.addEventListener('click', modal)
+gallery.addEventListener('click', modal);
